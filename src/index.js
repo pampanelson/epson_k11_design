@@ -4,9 +4,18 @@ import * as THREE from 'three';
 // trick to import other modules and merge to  THREE
 
 window.THREE = THREE;
+
+
 require('three/examples/js/controls/OrbitControls.js');
+//add json loader manually
+require('three/src/loaders/JSONLoader.js');
+
 
 window.onload = function() {
+
+    const loader = new THREE.JSONLoader();
+
+    console.log(loader);
 
     const resize = function() {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -31,19 +40,36 @@ window.onload = function() {
     camera.position.set(0, 20, 100);
     controls.update();
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // const geometry = new THREE.BoxGeometry(1, 1, 1);
+    // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    // const cube = new THREE.Mesh(geometry, material);
+    // scene.add(cube);
+
+    loader.load(
+        // resource URL under /dist 
+        "static/1.json",
+        // onLoad callback
+        function(geometry, material) {
+            var object = new THREE.Mesh(geometry, material);
+            scene.add(object);
+        },
+
+
+        // onProgress callback
+        function(xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+
+        // onError callback
+        function(err) {
+            console.error('An error happened');
+        }
+    );
 
     camera.position.z = 5;
 
     const animate = function() {
         requestAnimationFrame(animate);
-
-        // cube.rotation.x += 0.01;
-        // cube.rotation.y += 0.01;
-
 
         controls.update();
 

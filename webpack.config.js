@@ -29,7 +29,6 @@ module.exports = {
     // entry: {
     //     dev_page:['./src/index.html','./src/index.js']
     // },
-
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/index.html",
@@ -38,7 +37,6 @@ module.exports = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
-
 
     devServer: {
         contentBase: require('path').join(__dirname, "dist"),
