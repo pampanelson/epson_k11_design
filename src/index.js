@@ -9,11 +9,12 @@ window.THREE = THREE;
 require('three/examples/js/controls/OrbitControls.js');
 //add json loader manually
 require('three/src/loaders/JSONLoader.js');
-
+require('three/src/loaders/ObjectLoader.js');
 
 window.onload = function() {
 
-    const loader = new THREE.JSONLoader();
+    // const loader = new THREE.JSONLoader();
+    const loader = new THREE.ObjectLoader();
 
     console.log(loader);
 
@@ -47,13 +48,16 @@ window.onload = function() {
 
     loader.load(
         // resource URL under /dist 
-        "static/1.json",
+        // "static/1.json",
+        "static/scenetest.json",
         // onLoad callback
-        function(geometry, material) {
-            var object = new THREE.Mesh(geometry, material);
-            scene.add(object);
+        // function(geometry, material) {
+        //     var object = new THREE.Mesh(geometry, material);
+        //     scene.add(object);
+        // },
+        function (obj) {
+            scene.add(obj);
         },
-
 
         // onProgress callback
         function(xhr) {
